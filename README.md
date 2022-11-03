@@ -3,10 +3,10 @@ DYEditor is custom made to use [CKEditor5](https://www.npmjs.com/package/ckedito
 By using this, you can use CKEditor5 more conveniently.   
 
 ## Quick start
-> npm install DYEditor
+> npm install --save DYEditor
 
 ```javascript
-import DYEditor, {getData, uploadImages} from "@DYEditor";
+import DYEditor, {getData, uploadImages} from "DYEditor/dyeditor";
 
 export default Component () => {
     return <DYEditor 

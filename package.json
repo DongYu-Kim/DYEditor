@@ -1,0 +1,26 @@
+{
+  "name": "dyeditor",
+  "version": "1.0.0",
+  "description": "Editor created by DongYu as CKEditor5, which can be used in React.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DongYu-Kim/DYEditor.git"
+  },
+  "keywords": [
+    "react",
+    "ckeditor5"
+  ],
+  "author": "KimDongYu <ehddb2252@gmail.com>",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/DongYu-Kim/DYEditor/issues"
+  },
+  "homepage": "https://github.com/DongYu-Kim/DYEditor#readme",
+  "dependencies": {
+    "react": "^18.2.0"
+  }
+}
