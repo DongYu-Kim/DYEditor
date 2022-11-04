@@ -1,6 +1,6 @@
 {
   "name": "dyeditor",
-  "version": "1.0.0",
+  "version": "1.2.1",
   "description": "Editor created by DongYu as CKEditor5, which can be used in React.",
   "main": "index.js",
   "scripts": {
