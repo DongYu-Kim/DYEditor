@@ -1,0 +1,25 @@
+{
+    "name": "dyeditor",
+    "version": "1.2.3",
+    "description": "DYEditor is custom made to use [CKEditor5](https://www.npmjs.com/package/ckeditor5) in React.",
+    "keywords": [
+        "react",
+        "ckeditor5"
+    ],
+    "homepage": "https://github.com/DongYu-Kim/DYEditor",
+    "bugs": {
+        "url": "https://github.com/DongYu-Kim/DYEditor/issues",
+        "email": "ehddb2252@gmail.com"
+    },
+    "license": "GPL-3.0+",
+    "author": {
+        "name": "DongYu-Kim",
+        "email": "ehddb2252@gmail.com",
+        "url": "https://github.com/DongYu-Kim"
+    },
+    "main": "dist/index.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DongYu-Kim/DYEditor"
+    }
+}

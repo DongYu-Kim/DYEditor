@@ -2,7 +2,7 @@ import Index from "./pages";
 import { useState } from "react";
 import Article from "./pages/article";
 import ButtonSet from "./components/ButtonSet";
-import DYEditor, { getData, uploadImages } from "./lib";
+import DYEditor, { getData, uploadImages } from "dyeditor";
 export {DYEditor};
 
 let cnt = 1;
