@@ -1,12 +1,14 @@
-import DYEditor from '../lib/index';
+import Title from '../components/Title';
+import {DYEditor} from '../App';
+import fileToURL from '../functions/filetoURL';
 
-export default function Article({mode, setMode, article, createArticle}) {
-  console.log(article)
+export default function Article({mode, article}) {
   return <div>
-    <h1>{article.title}</h1>
-    {article.content?<DYEditor 
+    <Title mode={mode} text={article.title}/>
+    <DYEditor 
       data={article.content}
-      readOnly={mode===2?true:false}
-    />:null}
+      readOnly={mode===2}
+      imageUploader={fileToURL}
+    />
   </div>
 }

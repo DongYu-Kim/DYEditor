@@ -2,11 +2,13 @@ import React, { useEffect, useRef } from 'react';
 import ClassicEditor from './ckeditor/ckeditor';
 import { switchToReadMode, removeImageUploadElement, dataURLtoFile, isBase64Image } from './functions';
 
-
+let flag = false
 export default function DYEditor ({data, readOnly, imageUploader}) {
+    flag = false;
     const DYEditorEl = useRef();
     useEffect(() => {
-        if(DYEditorEl.state === undefined) {
+        flag = !flag
+        if(flag) {
             ClassicEditor.create(DYEditorEl.current)
             .then(editor => {
                 _editor = editor;
@@ -20,7 +22,7 @@ export default function DYEditor ({data, readOnly, imageUploader}) {
             })
             .catch(err => console.error(err));
         }
-        DYEditorEl.state = true;
+        return ()=>{if(_editor && _editor.state !== "destroyed")_editor.destroy()};
     })
     if(data === undefined || data === null) data = "";
     if(typeof data !== "string") console.error("data must be a string.")
@@ -32,8 +34,8 @@ export default function DYEditor ({data, readOnly, imageUploader}) {
 
 
 let _editor = null;
-export let getData = null;
-export let uploadImages = null; // If not called, the Base64 upload method is used.
+export let getData = ()=>console.error("getData can be called after the DYEditor component is created.");
+export let uploadImages = ()=>console.error("uploadImages is available only after adding imageUploader."); // If not called, the Base64 upload method is used.
 function setUploadImages(_editor, imageUploader) {
     uploadImages = () => {
         const promises = [];

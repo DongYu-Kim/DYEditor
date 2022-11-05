@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-export default function Index({articles, setMode, setId}) {
+export default function Index({articles, readArticle}) {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   
@@ -22,24 +22,20 @@ export default function Index({articles, setMode, setId}) {
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
   }
-  function clickArticle(id) {
-    setMode(2);
-    setId(id);
-  }
   
   return (
     <TableContainer component={Paper}>
     <Table size="small">
       <TableHead>
         <TableRow>
-          <TableCell>No</TableCell>
-          <TableCell align="right">Title</TableCell>
-          <TableCell align="right">Created</TableCell>
+          <TableCell style={{fontWeight:"bold"}}>No</TableCell>
+          <TableCell align="right" style={{fontWeight:"bold"}}>Title</TableCell>
+          <TableCell align="right" style={{fontWeight:"bold"}}>Created</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         {articles.map(({ number, title, created }) => (
-          <TableRow key={number} onClick={()=>clickArticle(number)}>
+          <TableRow key={number} style={{cursor:"pointer"}} onClick={()=>readArticle(number)}>
             <TableCell>{number}</TableCell>
             <TableCell align="right">{title}</TableCell>
             <TableCell align="right">{created}</TableCell>
