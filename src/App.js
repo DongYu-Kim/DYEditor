@@ -9,9 +9,7 @@ let cnt = 1;
 const defaultArticle = { number: 0, title: "", content: "", created: getCurrent() };
 export default function App() {
   const [mode, setMode] = useState(0); // 0: index, 1: create, 2: read, 3: update
-  const [articles, setArticles] = useState([
-    { number: cnt, title: "title", content: "content", created: getCurrent()}
-  ])
+  const [articles, setArticles] = useState([]);
   const [id, setId] = useState(0);
 
   // methods

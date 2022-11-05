@@ -2,12 +2,12 @@ import React, { useEffect, useRef } from 'react';
 import ClassicEditor from './ckeditor/ckeditor';
 import { switchToReadMode, removeImageUploadElement, dataURLtoFile, isBase64Image } from './functions';
 
-let flag = false
+let flag = false;
 export default function DYEditor ({data, readOnly, imageUploader}) {
     flag = false;
     const DYEditorEl = useRef();
     useEffect(() => {
-        flag = !flag
+        flag = !flag;
         if(flag) {
             ClassicEditor.create(DYEditorEl.current)
             .then(editor => {

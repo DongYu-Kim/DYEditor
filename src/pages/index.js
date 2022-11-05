@@ -29,15 +29,16 @@ export default function Index({articles, readArticle}) {
       <TableHead>
         <TableRow>
           <TableCell style={{fontWeight:"bold"}}>No</TableCell>
-          <TableCell align="right" style={{fontWeight:"bold"}}>Title</TableCell>
+          <TableCell align="center" style={{fontWeight:"bold"}}>Title</TableCell>
           <TableCell align="right" style={{fontWeight:"bold"}}>Created</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
+        {!articles.length?<TableRow><TableCell/><TableCell align="center">There are no articles.</TableCell></TableRow>:null}
         {articles.map(({ number, title, created }) => (
           <TableRow key={number} style={{cursor:"pointer"}} onClick={()=>readArticle(number)}>
             <TableCell>{number}</TableCell>
-            <TableCell align="right">{title}</TableCell>
+            <TableCell align="center">{title}</TableCell>
             <TableCell align="right">{created}</TableCell>
           </TableRow>
         ))}
