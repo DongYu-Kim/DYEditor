@@ -1,16 +1,11 @@
 # DYEditor
-DYEditor is custom made to use [CKEditor5](https://www.npmjs.com/package/ckeditor5) in React.
-By using this, you can use CKEditor5 more conveniently.   
+This is an example project using [dyeditor](https://www.npmjs.com/package/dyeditor) made with react. You can test the functions of dyeeditor.
 
 ## Quick start
-```javascript
-import DYEditor, {getData, uploadImages} from 'dyeditor/dist';
+```
+git clone https://github.com/DongYu-Kim/DYEditor.git
 
-export default Component () => {
-    return <DYEditor 
-        data={_data} // _data is the initial value. data must be a string.
-        readOnly={_readOnly} // readOnly must be a boolean.
-        imageUploader={_imageUploader} // imageUploader must be a function that takes a file as input and a imageUrl as output.
-    />
-}
+cd dyeditor
+npm install
+npm run start
 ```
