@@ -52,13 +52,15 @@ function setUploadImages(_editor, imageUploader) {
                     }
                     else {
                         _setData(_getData().replace(imgEl.src, imgUrl));
-                        await _editor.setData(_getData());
                         resolve(imgUrl)
                     }
                 })
                 promises.push(promise);
             }
         }
-        return Promise.allSettled(promises);
+        return Promise.allSettled(promises).then(async(results)=>{
+            _editor.setData(_getData())
+            return results
+        });
     }
 }
