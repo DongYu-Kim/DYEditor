@@ -28,7 +28,7 @@ function ReactComponent({_data, _readOnly, _imageUploader}) {
     return <DYEditor
         data={_data}
         readOnly={_readOnly}
-        imageUploader={_imageUploader} 
+        imageUploader={_imageUploader} // imageUploader must be a function that takes a file as input and a imageUrl as output.
     />
 }
 ```
@@ -39,6 +39,7 @@ function ReactComponent({_data, _readOnly, _imageUploader}) {
     You can select read mode or write mode. true is read mode, false is write mode. The default value is false, which is read mode.
 - **imageUploader**   
     You can use Base64 image upload, storage image upload, or no image upload. If imageUploader is a function, it uses image upload. Which image upload to use is covered in the description of [uploadImages](#uploadImages). The default value is null, and image upload is not used.
+    **imageUploader must be a function that takes a file as input and a imageUrl as output.**
 
 ### getData
 When the getData function is called, the created html of DYEditor is returned.
@@ -68,17 +69,6 @@ npm install
 npm run start
 ```
 
-```javascript
-import DYEditor, {getData, uploadImages} from 'dyeditor';
-
-export default Component () => {
-    return <DYEditor 
-        data={_data} // _data is the initial value. data must be a string.
-        readOnly={_readOnly} // readOnly must be a boolean.
-        imageUploader={_imageUploader} // imageUploader must be a function that takes a file as input and a imageUrl as output.
-    />
-}
-```
 
 ## Contribution
 Contribute by fixing documentation, reporting code errors, etc...   
