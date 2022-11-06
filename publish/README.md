@@ -32,7 +32,7 @@ function ReactComponent({_data, _readOnly, _imageUploader}) {
     />
 }
 ```
-> props
+#### props
 - **data**   
     data is an initial value. The default value is "".   
 - **readOnly**   
