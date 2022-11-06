@@ -6,7 +6,6 @@
         "react",
         "ckeditor5"
     ],
-    "homepage": "https://github.com/DongYu-Kim/DYEditor",
     "bugs": {
         "url": "https://github.com/DongYu-Kim/DYEditor/issues",
         "email": "ehddb2252@gmail.com"

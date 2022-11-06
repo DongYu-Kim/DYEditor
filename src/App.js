@@ -5,7 +5,7 @@ import ButtonSet from "./components/ButtonSet";
 import DYEditor, { getData, uploadImages } from "dyeditor";
 export {DYEditor};
 
-let cnt = 1;
+let cnt = 0;
 const defaultArticle = { number: 0, title: "", content: "", created: getCurrent() };
 export default function App() {
   const [mode, setMode] = useState(0); // 0: index, 1: create, 2: read, 3: update

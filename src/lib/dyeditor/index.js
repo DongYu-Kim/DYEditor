@@ -3,7 +3,7 @@ import ClassicEditor from './ckeditor/ckeditor';
 import { switchToReadMode, removeImageUploadElement, dataURLtoFile, isBase64Image } from './functions';
 
 let flag = false;
-export default function DYEditor ({data, readOnly, imageUploader}) {
+export default function DYEditor ({data = "", readOnly = false, imageUploader = null}) {
     flag = false;
     const DYEditorEl = useRef();
     useEffect(() => {
@@ -13,7 +13,7 @@ export default function DYEditor ({data, readOnly, imageUploader}) {
             .then(editor => {
                 _editor = editor;
                 _editor.setData(data);
-                if(imageUploader === undefined) removeImageUploadElement(_editor);
+                if(imageUploader === null) removeImageUploadElement(_editor);
                 else{
                     if(typeof imageUploader === 'function') setUploadImages(_editor, imageUploader);
                 }
@@ -24,9 +24,7 @@ export default function DYEditor ({data, readOnly, imageUploader}) {
         }
         return ()=>{if(_editor && _editor.state !== "destroyed")_editor.destroy()};
     })
-    if(data === undefined || data === null) data = "";
     if(typeof data !== "string") console.error("data must be a string.")
-    if(readOnly === undefined) readOnly = false;
     if(typeof readOnly !== "boolean") console.error("readOnly must be a boolean")
     
     return <span ref={DYEditorEl} />
