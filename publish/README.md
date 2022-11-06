@@ -14,7 +14,7 @@ npm install dyeditor
 ## Usages
 If you use something like reset.css, the style will not be applied.   
    
-DYEeditor has 1 component and 2 functions.
+dyeditor has 1 component and 2 functions.
 ```javascript
 import DYEditor, { getData, uploadImages } from 'dyeditor';
 ```
