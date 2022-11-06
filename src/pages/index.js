@@ -34,7 +34,7 @@ export default function Index({articles, readArticle}) {
         </TableRow>
       </TableHead>
       <TableBody>
-        {!articles.length?<TableRow><TableCell/><TableCell align="center">There are no articles.</TableCell></TableRow>:null}
+        {!articles.length?<TableRow><TableCell/><TableCell align="center">There are no articles.</TableCell><TableCell/></TableRow>:null}
         {articles.map(({ number, title, created }) => (
           <TableRow key={number} style={{cursor:"pointer"}} onClick={()=>readArticle(number)}>
             <TableCell>{number}</TableCell>
