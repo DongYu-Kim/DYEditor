@@ -22,7 +22,7 @@ import DYEditor, { getData, uploadImages } from 'dyeditor';
 ### DYEditor
 DYEditor component has 3 props.   
 ```javascript
-import DYEditor from '.dyeditor';
+import DYEditor from 'dyeditor';
 
 function ReactComponent({_data, _readOnly, _imageUploader}) {
     return <DYEditor
