@@ -94,7 +94,6 @@ function getCurrent() {
 
 export async function getContent() {
   if(typeof getData !== "function") return console.error("getData")
-  let content;
-  await uploadImages().then(results => content = getData());
-  return content
+  if(typeof uploadImages === "function") return uploadImages().then(results => getData());
+  return getData();
 }
