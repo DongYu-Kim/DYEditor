@@ -35,7 +35,7 @@ let _editor = null;
 export let getData = ()=>console.error("getData can be called after the DYEditor component is created.");
 export let uploadImages = ()=>console.error("uploadImages is available only after adding imageUploader."); // If not called, the Base64 upload method is used.
 function setUploadImages(_editor, imageUploader) {
-    uploadImages = () => {
+    uploadImages = async() => {
         const promises = [];
         let _data = _editor.getData();
         const _getData = () => (() => _data)();
@@ -59,7 +59,7 @@ function setUploadImages(_editor, imageUploader) {
             }
         }
         return Promise.allSettled(promises).then(async(results)=>{
-            _editor.setData(_getData())
+            await _editor.setData(_getData())
             return results
         });
     }

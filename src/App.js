@@ -93,6 +93,7 @@ function getCurrent() {
 }
 
 export async function getContent() {
-  if(typeof uploadImages === "function") await uploadImages();
-  if(typeof getData === "function") return getData();
+  if(typeof getData !== "function") return console.error("getData")
+  await uploadImages().then(results => content = getData());
+  return content
 }
