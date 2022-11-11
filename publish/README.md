@@ -55,7 +55,7 @@ let content;
 // use Base64
 content = getData();
 // use storage
-uploadImages().then(()=>{
+uploadImages().then(results=>{ // results is the success or failure of uploadimages
     content = getData();
 })
 ```

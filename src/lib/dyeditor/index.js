@@ -3,7 +3,7 @@ import ClassicEditor from './ckeditor/ckeditor';
 import { switchToReadMode, removeImageUploadElement, dataURLtoFile, isBase64Image } from './functions';
 
 let flag = false;
-export default function DYEditor ({data = "", readOnly = false, imageUploader = null}) {
+export default React.memo(function DYEditor ({data = "", readOnly = false, imageUploader = null}) {
     flag = false;
     const DYEditorEl = useRef();
     useEffect(() => {
@@ -28,8 +28,7 @@ export default function DYEditor ({data = "", readOnly = false, imageUploader = 
     if(typeof readOnly !== "boolean") console.error("readOnly must be a boolean")
     
     return <span ref={DYEditorEl} />
-}
-
+});
 
 let _editor = null;
 export let getData = ()=>console.error("getData can be called after the DYEditor component is created.");
@@ -47,7 +46,6 @@ function setUploadImages(_editor, imageUploader) {
                     const imgUrl = await imageUploader(imgFile)
                     if(typeof imgUrl !== 'string') {
                         _setData(_getData().replace(imgEl.src, "image upload failed"));
-                        await _editor.setData(_getData());
                         reject(new Error("imageUploader should be a function that takes a file as input and a imageUrl as output. \n Or, request or response is wrong."))
                     }
                     else {
