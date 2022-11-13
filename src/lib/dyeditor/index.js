@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import ClassicEditor from './ckeditor/ckeditor';
-import { switchToReadMode, removeImageUploadElement, dataURLtoFile, isBase64Image } from './functions';
+import { switchToReadMode, removeImageUploadElement, dataURLtoFile, isBase64Image, initializeToolbar } from './function';
 
 let flag = false;
 export default React.memo(function DYEditor ({data = "", readOnly = false, imageUploader = null}) {
@@ -13,7 +13,8 @@ export default React.memo(function DYEditor ({data = "", readOnly = false, image
             .then(editor => {
                 _editor = editor;
                 _editor.setData(data);
-                if(imageUploader === null) removeImageUploadElement(_editor);
+                initializeToolbar(_editor);
+                if(imageUploader === null) removeImageUploadElement();
                 else{
                     if(typeof imageUploader === 'function') setUploadImages(_editor, imageUploader);
                 }
@@ -27,7 +28,9 @@ export default React.memo(function DYEditor ({data = "", readOnly = false, image
     if(typeof data !== "string") console.error("data must be a string.")
     if(typeof readOnly !== "boolean") console.error("readOnly must be a boolean")
     
-    return <span ref={DYEditorEl} />
+    return <span style={{all: "initial"}}>
+        <span ref={DYEditorEl} />
+    </span> 
 });
 
 let _editor = null;

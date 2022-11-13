@@ -6,6 +6,7 @@ CKEditor5 is a really good library. However, my friends around me found it diffi
 
 
 ## Install
+The code source is at [DYEditor repository](https://github.com/DongYu-Kim/DYEditor/blob/main/src/lib/dyeditor/index.js)
 ```bash
 npm install dyeditor
 ```

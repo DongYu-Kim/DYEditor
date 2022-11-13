@@ -11,7 +11,6 @@ export default function App() {
   const [mode, setMode] = useState(0); // 0: index, 1: create, 2: read, 3: update
   const [articles, setArticles] = useState([]);
   const [id, setId] = useState(0);
-  const [state, setState] = useState(false);
 
   // methods
   function createArticle(title, content) {
@@ -80,7 +79,7 @@ export default function App() {
       {mode===0?<ButtonSet mode={mode} createArticle={createArticle}/>:null}  
       {mode===0?
         <Index articles={articles} readArticle={readArticle}/>:
-        <Article state={state} setState={setState} mode={mode} article={id!==0?articles.find(article => article.number===id):defaultArticle}/>}
+        <Article mode={mode} article={id!==0?articles.find(article => article.number===id):defaultArticle}/>}
       <ButtonSet mode={mode} id={id} createArticle={createArticle} readArticle={readArticle} updateArticle={updateArticle} deleteArticle={deleteArticle}/>
     </div>
   );
