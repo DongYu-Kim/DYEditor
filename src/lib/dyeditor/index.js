@@ -3,7 +3,7 @@ import ClassicEditor from './ckeditor/ckeditor';
 import { switchToReadMode, removeImageUploadElement, dataURLtoFile, isBase64Image, initializeToolbar } from './function';
 
 let flag = false;
-export default React.memo(function DYEditor ({data = "", readOnly = false, imageUploader = null}) {
+export default React.memo(function DYEditor ({data = "", readOnly = false, imageUploader = null, style = {}}) {
     flag = false;
     const DYEditorEl = useRef();
     useEffect(() => {
@@ -13,24 +13,24 @@ export default React.memo(function DYEditor ({data = "", readOnly = false, image
             .then(editor => {
                 _editor = editor;
                 _editor.setData(data);
-                initializeToolbar(_editor);
+                initializeToolbar(_editor, style);
+                state = true;
                 if(imageUploader === null) removeImageUploadElement();
-                else{
-                    if(typeof imageUploader === 'function') setUploadImages(_editor, imageUploader);
-                }
+                else if(typeof imageUploader === 'function') setUploadImages(_editor, imageUploader);
                 if(readOnly) switchToReadMode(_editor);
                 getData = () => _editor.getData();
             })
             .catch(err => console.error(err));
         }
-        return ()=>{if(_editor && _editor.state !== "destroyed")_editor.destroy()};
+        return ()=>{
+            if(_editor && _editor.state !== "destroyed") _editor.destroy();
+            state = false;
+        };
     })
     if(typeof data !== "string") console.error("data must be a string.")
     if(typeof readOnly !== "boolean") console.error("readOnly must be a boolean")
     
-    return <span style={{all: "initial"}}>
-        <span ref={DYEditorEl} />
-    </span> 
+    return <span ref={DYEditorEl} />
 });
 
 let _editor = null;
@@ -64,4 +64,22 @@ function setUploadImages(_editor, imageUploader) {
             return results
         });
     }
+}
+
+let state = false;
+const TICK = 10;
+const LIMIT = 3000;
+async function checkState() {
+    let stateFlag = true;
+    setTimeout(()=>stateFlag = !stateFlag, LIMIT);
+    while(stateFlag && !state)
+        await new Promise(resolve => setTimeout(resolve, TICK));
+    return stateFlag;
+}
+export const getEditorTag = () => {
+    return new Promise(async(resolve, reject) => {
+        const result = await checkState();
+        if (!result) reject(new Error("Failed to get DYEditor HTML element."));
+        else resolve(_editor.ui.view.element);
+    });
 }

@@ -15,9 +15,9 @@ npm install dyeditor
 ## Usages
 If you use something like reset.css, the style will not be applied.   
    
-dyeditor has 1 component and 2 functions.
+dyeditor has 1 component and 3 functions.
 ```javascript
-import DYEditor, { getData, uploadImages } from 'dyeditor';
+import DYEditor, { getData, uploadImages, getEditorTag } from 'dyeditor';
 ```
 
 ### DYEditor
@@ -60,6 +60,17 @@ uploadImages().then(results=>{ // results is the success or failure of uploadima
     content = getData();
 })
 ```
+
+### getEditorTag
+When you want to customize the editor ui, use the getEditorTag function. getEditorTag is an async function that returns an editor HTML element.
+```javascript
+import { getEditorTag } from 'dyeditor';
+
+getEditorTag().then(editorHTMLTag=>{
+    // customize editor ui
+})
+```
+
 
 ## Example
 You can run an example using dkeditor in [DYEditor repository](https://github.com/DongYu-Kim/DYEditor).

@@ -1,40 +1,53 @@
-export default function initializeToolbar(_editor) {
+export default function initializeToolbar(_editor, style) {
     const editorEl = _editor.ui.view.element;
     initialize(_editor);
+    for(const _style in style)
+        editorEl.style[_style] = style[_style];
     function responsive() {
         if(editorEl.offsetWidth === 0)
             window.removeEventListener('resize', responsive);
         switch (changeState(editorEl.offsetWidth)) {
+            case CHANGE.NONE:
+                console.log('NONE');
+                break;
             case CHANGE.S:
-                changeToSmallToolbar()
+                console.log('SMALL');
+                changeToSmallToolbar();
                 break;
             case CHANGE.M:
-                changeToMiddleToolbar()
+                console.log('MIDDLE');
+                changeToMiddleToolbar();
                 break;
             case CHANGE.L:
-                changeToLargeToolbar()
+                console.log('LARGE');
+                changeToLargeToolbar();
                 break;
             case CHANGE.XL:
-                changeToExtraLargeToolbar(_editor)
+                console.log('EXTRA LARGE');
+                changeToExtraLargeToolbar(_editor);
                 break;
             default:
+                console.error("The size of the editor does not correspond anywhere.")
                 break;
         }
     }
-    window.addEventListener('resize', responsive)
-    responsive();
+    const resizeObserver = new ResizeObserver(() => {
+        responsive();
+    });
+    resizeObserver.observe(editorEl);
 }
 
 function initialize(_editor) {
+    const editorEl = _editor.ui.view.element;
+    editorEl.style.display = "inline-block";
+
     const toolbar = _editor.ui.view.toolbar;
     let idx = 0;
     for(const item of toolbar.items._itemMap) {
         ELEMENTS[idx] = item[1].element;
         idx += 1;
     }
-    const editorEl = _editor.ui.view.element;
     editorEl.removeChild(editorEl.firstChild);
-
     const editorToolbar = editorEl.firstChild;
     editorToolbar.style.border = "1px solid #ccced1";
     while(editorToolbar.firstChild) 
@@ -42,6 +55,10 @@ function initialize(_editor) {
     
     for(const group of grouping(ELEMENTS))
         editorToolbar.appendChild(group);
+    
+    const textBox = editorEl.lastChild;
+    textBox.style.border = "1px solid #ccced1";
+    textBox.firstChild.style.border = "0";
 }
 let state;
 function changeState(toolbarSize) {
@@ -84,7 +101,7 @@ const CHANGE = {
 }
 
 function changeToSmallToolbar() {
-    
+
 }
 
 function changeToMiddleToolbar() {
