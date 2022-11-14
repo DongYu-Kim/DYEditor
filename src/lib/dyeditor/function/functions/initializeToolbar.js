@@ -57,9 +57,9 @@ function initialize(_editor) {
     for(const group of grouping(ELEMENTS))
         editorToolbar.appendChild(group);
     
-    const textBox = editorEl.lastChild;
-    textBox.style.border = "1px solid #ccced1";
-    textBox.firstChild.style.border = "0";
+    // const textBox = editorEl.lastChild;
+    // textBox.style.border = "1px solid #ccced1";
+    // textBox.firstChild.style.border = "0";
 }
 let state;
 function changeState(toolbarSize) {
