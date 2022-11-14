@@ -8,23 +8,23 @@ export default function initializeToolbar(_editor, style) {
             window.removeEventListener('resize', responsive);
         switch (changeState(editorEl.offsetWidth)) {
             case CHANGE.NONE:
-                console.log('NONE');
+                // console.log('NONE');
                 break;
-            case CHANGE.S:
-                console.log('SMALL');
-                changeToSmallToolbar();
-                break;
+            // case CHANGE.S:
+            //     console.log('SMALL');
+            //     changeToSmallToolbar();
+            //     break;
             case CHANGE.M:
-                console.log('MIDDLE');
-                changeToMiddleToolbar();
+                // console.log('MIDDLE');
+                changeToMiddleToolbar(editorEl.firstChild);
                 break;
-            case CHANGE.L:
-                console.log('LARGE');
-                changeToLargeToolbar();
-                break;
+            // case CHANGE.L:
+            //     console.log('LARGE');
+            //     changeToLargeToolbar();
+            //     break;
             case CHANGE.XL:
-                console.log('EXTRA LARGE');
-                changeToExtraLargeToolbar(_editor);
+                // console.log('EXTRA LARGE');
+                changeToExtraLargeToolbar(editorEl.firstChild);
                 break;
             default:
                 console.error("The size of the editor does not correspond anywhere.")
@@ -39,7 +39,7 @@ export default function initializeToolbar(_editor, style) {
 
 function initialize(_editor) {
     const editorEl = _editor.ui.view.element;
-    editorEl.style.display = "inline-block";
+    // editorEl.style.display = "inline-block";
 
     const toolbar = _editor.ui.view.toolbar;
     let idx = 0;
@@ -47,6 +47,7 @@ function initialize(_editor) {
         ELEMENTS[idx] = item[1].element;
         idx += 1;
     }
+    ELEMENTS[ELEMENT_NAME.paragraph].style.width = "88px";
     editorEl.removeChild(editorEl.firstChild);
     const editorToolbar = editorEl.firstChild;
     editorToolbar.style.border = "1px solid #ccced1";
@@ -67,52 +68,76 @@ function changeState(toolbarSize) {
         state = CHANGE.NONE;
         return CHANGE.NONE;
     }
-    if(toolbarSize <= BORDER.S) {
-        state = CHANGE.S;
-        if(_state !== state) return state;
-        return CHANGE.NONE;
-    }
+    // if(toolbarSize <= BORDER.S) {
+    //     state = CHANGE.S;
+    //     if(_state !== state) return state;
+    //     return CHANGE.NONE;
+    // }
     if(toolbarSize <= BORDER.M) {
         state = CHANGE.M;
         if(_state !== state) return state;
         return CHANGE.NONE;
     }
-    if(toolbarSize <= BORDER.L) {
-        state = CHANGE.L;
-        if(_state !== state) return state;
-        return CHANGE.NONE;
-    }
+    // if(toolbarSize <= BORDER.L) {
+    //     state = CHANGE.L;
+    //     if(_state !== state) return state;
+    //     return CHANGE.NONE;
+    // }
     state = CHANGE.XL;
     if(_state !== state) return state;
     return CHANGE.NONE;
 }
 
 const BORDER = {
-    S: 610,
-    M: 740,
-    L: 820,
+    // S: 610,
+    M: 690,
+    // L: 820,
 }
 const CHANGE = {
     NONE: 0,
-    S: 1,
+    // S: 1,
     M: 2,
-    L: 3,
+    // L: 3,
     XL: 4,
 }
 
-function changeToSmallToolbar() {
+let upEl;
+let downEl;
+let containerEl;
+// function changeToSmallToolbar() {
+// }
 
+function changeToMiddleToolbar(_toolbar) {
+    if(upEl) upEl.remove();
+    upEl = document.createElement('div');
+    if(downEl) downEl.remove();
+    downEl = document.createElement('div');
+    if(containerEl) containerEl.remove();
+    containerEl = document.createElement('div');
+    containerEl.style.display = "flex";
+    containerEl.style.flexDirection = "column";
+    upEl.appendChild(GROUPS[GROUP_NAME.context]);
+    upEl.appendChild(GROUPS[GROUP_NAME.media]);
+    upEl.appendChild(GROUPS[GROUP_NAME.character]);
+    containerEl.appendChild(upEl);
+    GROUPS[GROUP_NAME.text].style.borderLeft = "0px";
+    downEl.appendChild(GROUPS[GROUP_NAME.text]);
+    downEl.style.borderTop = "1px solid #ccced1";
+    containerEl.appendChild(downEl);
+    _toolbar.appendChild(containerEl);
 }
 
-function changeToMiddleToolbar() {
+// function changeToLargeToolbar() {
+// }
 
-}
-
-function changeToLargeToolbar() {
-
-}
-
-function changeToExtraLargeToolbar() {
+function changeToExtraLargeToolbar(_toolbar) {
+    _toolbar.appendChild(GROUPS[GROUP_NAME.context]);
+    GROUPS[GROUP_NAME.text].style.borderLeft = "1px solid #ccced1";
+    _toolbar.appendChild(GROUPS[GROUP_NAME.text]);
+    _toolbar.appendChild(GROUPS[GROUP_NAME.media]);
+    _toolbar.appendChild(GROUPS[GROUP_NAME.character]);
+    if(upEl) upEl.remove();
+    if(downEl) downEl.remove();
 }
 
 const ELEMENTS = new Array(20);
