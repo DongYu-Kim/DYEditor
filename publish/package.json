@@ -1,6 +1,6 @@
 {
     "name": "dyeditor",
-    "version": "1.4.1",
+    "version": "1.4.2",
     "description": "DYEditor is custom made to use [CKEditor5](https://www.npmjs.com/package/ckeditor5) in React.",
     "keywords": [
         "react",
