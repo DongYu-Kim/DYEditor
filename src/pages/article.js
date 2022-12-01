@@ -8,7 +8,7 @@ export default function Article({mode, article}) {
     <DYEditor 
       data={article.content}
       readOnly={mode===2}
-      imageUploader={fileToURL}
+      imageUpload={{uploader:fileToURL, resizing: true}}
     />
   </div>
 }

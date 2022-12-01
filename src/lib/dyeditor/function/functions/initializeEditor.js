@@ -1,4 +1,4 @@
-export default function initializeToolbar(_editor, style) {
+export default function initializeEditor(_editor, style) {
     const editorEl = _editor.ui.view.element;
     initialize(_editor);
     for(const _style in style)

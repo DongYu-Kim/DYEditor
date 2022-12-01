@@ -29,7 +29,7 @@ function ReactComponent({_data, _readOnly, _imageUploader}) {
     return <DYEditor
         data={_data}
         readOnly={_readOnly}
-        imageUploader={_imageUploader} // imageUploader must be a function that takes a file as input and a imageUrl as output.
+        imageUpload={{uploader:_uploader, resizing: _resizing}} // uploader must be a function that takes a file as input and a imageUrl as output.
     />
 }
 ```
@@ -38,9 +38,12 @@ function ReactComponent({_data, _readOnly, _imageUploader}) {
     data is an initial value. The default value is "".   
 - **readOnly**   
     You can select read mode or write mode. true is read mode, false is write mode. The default value is false, which is read mode.
-- **imageUploader**   
-    You can use Base64 image upload, storage image upload, or no image upload. If imageUploader is a function, it uses image upload. Which image upload to use is covered in the description of [uploadImages](#uploadImages). The default value is null, and image upload is not used.
-    **imageUploader must be a function that takes a file as input and a imageUrl as output.**
+- **imageUpload**    
+    - **uploader**
+        You can use Base64 image upload, storage image upload, or no image upload. If uploader is a function, it uses image upload. Which image upload to use is covered in the description of [uploadImages](#uploadImages). The default value is null, and image upload is not used.
+        **uploader must be a function that takes a file as input and a imageUrl as output.**
+    - **resizing**
+        You can select using resizing or not when upload images. true is using resizing image, false is using original image. The default value is false, which is not using resizing image.
 
 ### getData
 When the getData function is called, the created html of DYEditor is returned.

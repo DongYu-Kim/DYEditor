@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import ClassicEditor from './ckeditor/ckeditor';
-import { switchToReadMode, removeImageUploadElement, dataURLtoFile, isBase64Image, initializeToolbar } from './function';
+import { switchToReadMode, removeImageUploadElement, dataURLtoFile, isBase64Image, initializeEditor, resizeImage } from './function';
 
 let flag = false;
-export default React.memo(function DYEditor ({data = "", readOnly = false, imageUploader = null, style = {}}) {
+export default React.memo(function DYEditor ({data = "", readOnly = false, imageUpload = {uploader: null, resizing: false}, style = {}}) {
     flag = false;
     const DYEditorEl = useRef();
     useEffect(() => {
@@ -13,30 +13,37 @@ export default React.memo(function DYEditor ({data = "", readOnly = false, image
             .then(editor => {
                 _editor = editor;
                 _editor.setData(data);
-                initializeToolbar(_editor, style);
+                initializeEditor(_editor, style);
                 state = true;
-                if(imageUploader === null) removeImageUploadElement();
-                else if(typeof imageUploader === 'function') setUploadImages(_editor, imageUploader);
+                if(imageUpload.uploader === null) removeImageUploadElement();
+                else if(typeof imageUpload.uploader === 'function') setUploadImages(_editor, imageUpload.uploader, imageUpload.resizing);
                 if(readOnly) switchToReadMode(_editor);
                 getData = () => _editor.getData();
             })
             .catch(err => console.error(err));
         }
         return ()=>{
-            if(_editor && _editor.state !== "destroyed") _editor.destroy();
+            if(_editor && _editor.state !== "destroyed") {
+                const _data = _editor.getData();
+                getData = () =>{
+                    if(_editor.getData()) return _editor.getData();
+                    else return _data;
+                }
+                _editor.destroy();
+            }
             state = false;
         };
     })
-    if(typeof data !== "string") console.error("data must be a string.")
-    if(typeof readOnly !== "boolean") console.error("readOnly must be a boolean")
+    if(typeof data !== "string") console.error("data must be a string.");
+    if(typeof readOnly !== "boolean") console.error("readOnly must be a boolean");
     
     return <span ref={DYEditorEl} />
 });
 
 let _editor = null;
 export let getData = ()=>console.error("getData can be called after the DYEditor component is created.");
-export let uploadImages = ()=>console.error("uploadImages is available only after adding imageUploader."); // If not called, the Base64 upload method is used.
-function setUploadImages(_editor, imageUploader) {
+export let uploadImages = async()=>console.error("uploadImages is available only after adding imageUploader."); // If not called, the Base64 upload method is used.
+function setUploadImages(_editor, imageUploader, resizing) {
     uploadImages = async() => {
         const promises = [];
         let _data = _editor.getData();
@@ -44,24 +51,29 @@ function setUploadImages(_editor, imageUploader) {
         const _setData = (data) => _data = data;
         for(const imgEl of _editor.ui.element.getElementsByTagName('img')) {
             if(isBase64Image(imgEl)) {
-                const imgFile = dataURLtoFile(imgEl.src, "img.jpg");
                 const promise = new Promise(async(resolve, reject) => {
-                    const imgUrl = await imageUploader(imgFile)
+                    const resizedImage = resizing ? await resizeImage(imgEl.src, imgEl.clientWidth, imgEl.clientHeight) : imgEl.src;
+                    const imgFile = dataURLtoFile(resizedImage, "img.png");
+                    const imgUrl = await imageUploader(imgFile);
                     if(typeof imgUrl !== 'string') {
                         _setData(_getData().replace(imgEl.src, "image upload failed"));
-                        reject(new Error("imageUploader should be a function that takes a file as input and a imageUrl as output. \n Or, request or response is wrong."))
+                        reject(new Error("imageUploader should be a function that takes a file as input and a imageUrl as output. \n Or, request or response is wrong."));
                     }
                     else {
                         _setData(_getData().replace(imgEl.src, imgUrl));
-                        resolve(imgUrl)
+                        resolve(imgUrl);
                     }
                 })
                 promises.push(promise);
             }
         }
         return Promise.allSettled(promises).then(async(results)=>{
-            await _editor.setData(_getData())
-            return results
+            await _editor.setData(_getData());
+            getData = () =>{
+                if(_editor.getData()) return _editor.getData();
+                else return _getData();
+            };
+            return results;
         });
     }
 }
